@@ -9,6 +9,7 @@ import * as styles from "./pokemon.css"
 export const loader = ({ params }: Route.LoaderArgs) =>
   pipe(
     PokemonService,
+    Effect.tap(() => Effect.logInfo("Requesting pokemon by name", params.name)),
     Effect.andThen((_) => _.getPokemonByName(params.name)),
     remixRuntime.runPromise
   )
