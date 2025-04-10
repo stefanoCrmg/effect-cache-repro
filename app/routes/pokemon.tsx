@@ -19,8 +19,11 @@ export function HydrateFallback() {
 }
 
 const PokemonPage: React.FC<Route.ComponentProps> = ({ params, loaderData }) => {
+  // const session = authClient.useSession().data?.session
+
   return (
     <div className={styles.container}>
+      {/* <div>Hello {session?.userId}!</div> */}
       <h1 className={styles.title}>{params.name}</h1>
       <div className={styles.card}>
         <div className={styles.spriteContainer}>
