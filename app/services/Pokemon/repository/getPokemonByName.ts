@@ -36,21 +36,27 @@ export class PokemonService extends Context.Tag("PokemonService")<
   }
 >() {}
 
+const PokemonCache = pipe(
+  Cache.make({
+    capacity: 2,
+    timeToLive: Duration.infinity,
+    lookup: getPokemonByName,
+  }),
+  Effect.tap(Effect.logDebug("Creating PokemonCache"))
+)
+
 export const PokemonServiceLive = Layer.effect(
   PokemonService,
   Effect.gen(function* () {
-    const cache = yield* Cache.make({
-      capacity: 2,
-      timeToLive: Duration.infinity,
-      lookup: getPokemonByName,
-    }).pipe(Effect.tap(() => Effect.logInfo("Creating PokemonCache")))
+    const cache = yield* PokemonCache
 
     return PokemonService.of({
       getPokemonByName: (name) =>
         pipe(
           cache.get(name),
-          Effect.tap(() => cache.cacheStats.pipe(Effect.andThen(Effect.logInfo)))
+          Effect.tap(cache.cacheStats.pipe(Effect.andThen(Effect.logDebug))),
+          Effect.withLogSpan("getPokemonByName")
         ),
     })
   })
-).pipe(Layer.tap(() => Effect.logInfo("Creating PokemonServiceLive")))
+).pipe(Layer.tap(() => Effect.logDebug("Creating PokemonServiceLive")))
