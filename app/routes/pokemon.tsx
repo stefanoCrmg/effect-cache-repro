@@ -1,6 +1,6 @@
 import { Effect, pipe } from "effect"
 import type * as React from "react"
-import { remixRuntime } from "~/lib/runtime.server"
+import { remixServerRuntime } from "~/lib/runtime.server"
 import { PokemonService } from "~/services/Pokemon/repository/getPokemonByName"
 import type { Route } from "./+types/pokemon"
 import { RawData } from "./components/RawData"
@@ -11,7 +11,7 @@ export const loader = ({ params }: Route.LoaderArgs) =>
     PokemonService,
     Effect.tap(() => Effect.logDebug("Requesting pokemon by name", params.name)),
     Effect.andThen((_) => _.getPokemonByName(params.name)),
-    remixRuntime.runPromise
+    remixServerRuntime.runPromise
   )
 
 export function HydrateFallback() {
