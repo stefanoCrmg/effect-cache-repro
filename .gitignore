@@ -6,4 +6,4 @@
 /build/
 
 .env
-data/migrations/db.sqlite
+data/db.sqlite
