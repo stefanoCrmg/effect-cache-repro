@@ -10,7 +10,7 @@ import type { AppLoadContext, EntryContext } from "react-router"
 import { ServerRouter } from "react-router"
 
 Sentry.init({
-  dsn: "https://01aa03f56d60e0231601c4ff66297d66@o4509241950470144.ingest.de.sentry.io/4509241952895056",
+  dsn: "???",
 
   // Adds request headers and IP for users, for more info visit:
   // https://docs.sentry.io/platforms/javascript/guides/react-router/configuration/options/#sendDefaultPii
