@@ -1,0 +1,87 @@
+---
+description: 
+globs: 
+alwaysApply: false
+---
+# React Functional Components Guidelines
+
+This rule provides guidelines for writing React functional components.
+
+## Core Principles
+
+- Always use functional components
+- Use TypeScript for type safety
+- Prefer composition over inheritance
+- Keep components small and focused
+
+## Component Structure
+
+```typescript
+// Good
+import { type FC } from 'react'
+import { pipe } from '@effect/data/Function'
+
+interface TodoProps {
+  id: string
+  title: string
+  completed: boolean
+}
+
+export const Todo: FC<TodoProps> = ({ id, title, completed }) => {
+  // Component logic here
+  return (
+    <div>
+      {/* JSX here */}
+    </div>
+  )
+}
+
+// Bad - avoid class components
+class Todo extends React.Component {
+  render() {
+    return <div>{/* JSX here */}</div>
+  }
+}
+```
+
+## State Management
+
+- Use Effect for complex state management
+- Use `useState` for simple local state
+- Avoid prop drilling, use context or state management
+- Keep state as local as possible
+
+## Effects and Side Effects
+
+- Use Effect for side effects
+- Avoid raw `useEffect` when possible
+- If `useEffect` is needed, properly handle cleanup
+- Use `Effect.gen` for complex workflows
+
+## Props
+
+- Always type your props
+- Use interface for prop types
+- Consider making props readonly
+- Use discriminated unions for variant props
+
+## Event Handlers
+
+- Type event handlers properly
+- Use Effect for complex event handling
+- Avoid inline arrow functions in JSX
+- Memoize callbacks when needed
+
+## Performance
+
+- Use `useMemo` for expensive computations
+- Use `memo` for expensive renders
+- Avoid premature optimization
+- Profile before optimizing
+
+## Testing
+
+- Write unit tests for components
+- Test business logic separately
+- Use React Testing Library
+- Focus on user behavior in tests
