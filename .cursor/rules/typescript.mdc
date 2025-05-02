@@ -1,0 +1,84 @@
+---
+description: 
+globs: 
+alwaysApply: false
+---
+# TypeScript Best Practices
+
+This rule provides guidelines for using TypeScript in the project.
+
+## Type Definitions
+
+- Use explicit types for function parameters and returns
+- Prefer interfaces over type aliases for objects
+- Use type aliases for unions and complex types
+- Use branded types for type-safe identifiers
+
+## Examples
+
+```typescript
+// Good
+interface User {
+  readonly id: string
+  readonly name: string
+  readonly email: string
+}
+
+type UserId = string & { readonly _tag: unique symbol }
+
+// Bad
+type User = {
+  id: string
+  name: string
+  email: string
+}
+```
+
+## Generics
+
+- Use meaningful generic names
+- Constrain generics when possible
+- Use multiple type parameters when needed
+- Document complex generic types
+
+## Error Handling
+
+- Use discriminated unions for errors
+- Define specific error types
+- Avoid throwing errors, use Effect
+- Type error handlers properly
+
+## Null and Undefined
+
+- Avoid null, use undefined
+- Use optional chaining
+- Use nullish coalescing
+- Enable strict null checks
+
+## Type Guards
+
+- Use type predicates
+- Create custom type guards
+- Use exhaustive checks
+- Document type guard assumptions
+
+## Async Code
+
+- Use Effect instead of Promise
+- Type async function returns
+- Handle errors explicitly
+- Use proper Promise types
+
+## Imports/Exports
+
+- Use named exports
+- Avoid default exports
+- Use type imports when possible
+- Group imports logically
+
+## Type Inference
+
+- Let TypeScript infer when obvious
+- Explicitly type complex structures
+- Use `as const` for literal types
+- Document type assertions

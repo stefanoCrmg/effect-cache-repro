@@ -1,0 +1,68 @@
+---
+description: 
+globs: 
+alwaysApply: false
+---
+# Effect API Usage Guidelines
+
+This rule provides guidelines for using Effect in the project.
+
+## Core Concepts
+
+- Always use `Effect.gen` for complex workflows with multiple effects
+- Prefer `pipe` operator for method chaining
+- Use `Effect.succeed` for pure values
+- Use `Effect.fail` for errors
+- Use `Effect.tryPromise` for Promise conversions
+
+## Error Handling
+
+- Define specific error types with `_tag` for better error handling
+- Use `Effect.catchAll` or `Effect.catchTag` for error recovery
+- Prefer typed errors over generic Error types
+
+## Examples
+
+```typescript
+// Good
+const getUser = Effect.gen(function* (_) {
+  const response = yield* Effect.tryPromise({
+    try: () => fetch("/api/user"),
+    catch: (e) => new GetUserError(e)
+  })
+  return yield* Effect.try({
+    try: () => response.json(),
+    catch: (e) => new ParseUserError(e)
+  })
+})
+
+// Bad - avoid raw promises
+const getUser = async () => {
+  const response = await fetch("/api/user")
+  return response.json()
+}
+```
+
+## Batching
+
+- Use `Request` types for API calls that can be batched
+- Implement `Equal` and `Hash` for request types
+- Use `HashSet` and `HashMap` for collections requiring value equality
+
+## Collections
+
+- Use `HashSet` instead of `Set` for value-based equality
+- Use `HashMap` instead of `Map` for value-based key comparison
+- Always implement `Equal` and `Hash` for custom types used in collections
+
+## Data Modeling
+
+- Use `Data.struct` for simple data objects
+- Implement custom `Equal` and `Hash` for complex types
+- Use branded types for type-safe identifiers
+
+## Testing
+
+- Use `Effect.test` for writing tests
+- Use `TestClock` for time-based operations
+- Use `TestContext` for dependency injection

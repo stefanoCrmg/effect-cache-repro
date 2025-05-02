@@ -1,12 +1,12 @@
-import { NodeSdk } from "@effect/opentelemetry"
+import { WebSdk } from "@effect/opentelemetry"
 import { SentrySpanProcessor } from "@sentry/opentelemetry"
 import { Layer, LogLevel, Logger, ManagedRuntime, pipe } from "effect"
 import { PokeAPI } from "~/services/PokeAPI"
 
 const sentrySpanProcessor = new SentrySpanProcessor()
 
-const NodeSdkLive = NodeSdk.layer(() => ({
-  resource: { serviceName: "remix-server" },
+const WebSdkLive = WebSdk.layer(() => ({
+  resource: { serviceName: "web-client" },
   spanProcessor: sentrySpanProcessor,
 }))
 
@@ -14,8 +14,8 @@ const LoggerLayer = Logger.replace(Logger.defaultLogger, Logger.prettyLoggerDefa
   Layer.merge(Logger.minimumLogLevel(LogLevel.Debug))
 )
 
-const apiLayer = pipe(Layer.provide(PokeAPI.Default, LoggerLayer), Layer.provideMerge(NodeSdkLive))
+const apiLayer = pipe(Layer.provide(PokeAPI.Default, LoggerLayer), Layer.provideMerge(WebSdkLive))
 
-const remixServerRuntime = ManagedRuntime.make(apiLayer)
+const remixClientRuntime = ManagedRuntime.make(apiLayer)
 
-export { remixServerRuntime }
+export { remixClientRuntime }
