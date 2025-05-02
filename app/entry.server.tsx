@@ -1,11 +1,25 @@
 import { PassThrough } from "node:stream"
 import { createReadableStreamFromReadable } from "@react-router/node"
+import { nodeProfilingIntegration } from "@sentry/profiling-node"
 import { getMetaTagTransformer, wrapSentryHandleRequest } from "@sentry/react-router"
+import * as Sentry from "@sentry/react-router"
 import { isbot } from "isbot"
 import type { RenderToPipeableStreamOptions } from "react-dom/server"
 import { renderToPipeableStream } from "react-dom/server"
 import type { AppLoadContext, EntryContext } from "react-router"
 import { ServerRouter } from "react-router"
+
+Sentry.init({
+  dsn: "https://01aa03f56d60e0231601c4ff66297d66@o4509241950470144.ingest.de.sentry.io/4509241952895056",
+
+  // Adds request headers and IP for users, for more info visit:
+  // https://docs.sentry.io/platforms/javascript/guides/react-router/configuration/options/#sendDefaultPii
+  sendDefaultPii: true,
+
+  integrations: [nodeProfilingIntegration()],
+  tracesSampleRate: 1.0, // Capture 100% of the transactions
+  profilesSampleRate: 1.0, // profile every transaction
+})
 
 export const streamTimeout = 5_000
 

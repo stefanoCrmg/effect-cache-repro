@@ -1,5 +1,5 @@
 import { createGlobalTheme, createTheme, createThemeContract, globalStyle } from "@vanilla-extract/css"
-import { colors } from "./tokens"
+import { colors } from "./tokens.css"
 
 // Define our global theme tokens
 export const vars = createGlobalTheme(":root", {

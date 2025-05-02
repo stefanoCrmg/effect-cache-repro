@@ -1,6 +1,8 @@
 onlyBuiltDependencies:
   - '@biomejs/biome'
   - '@parcel/watcher'
+  - '@sentry-internal/node-cpu-profiler'
+  - '@sentry/cli'
   - better-sqlite3
   - esbuild
   - msgpackr-extract
