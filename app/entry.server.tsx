@@ -3,15 +3,20 @@ import { createReadableStreamFromReadable } from "@react-router/node"
 import { nodeProfilingIntegration } from "@sentry/profiling-node"
 import { getMetaTagTransformer, wrapSentryHandleRequest } from "@sentry/react-router"
 import * as Sentry from "@sentry/react-router"
+import { Config, Effect } from "effect"
 import { isbot } from "isbot"
 import type { RenderToPipeableStreamOptions } from "react-dom/server"
 import { renderToPipeableStream } from "react-dom/server"
 import type { AppLoadContext, EntryContext } from "react-router"
 import { ServerRouter } from "react-router"
 
-Sentry.init({
-  dsn: "???",
+const readDSN = Config.string("SENTRY_DSN").pipe(
+  Effect.andThen((_) => _),
+  Effect.runSync
+)
 
+Sentry.init({
+  dsn: readDSN,
   // Adds request headers and IP for users, for more info visit:
   // https://docs.sentry.io/platforms/javascript/guides/react-router/configuration/options/#sendDefaultPii
   sendDefaultPii: true,
