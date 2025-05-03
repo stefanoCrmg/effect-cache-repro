@@ -5,11 +5,11 @@ import { Array as A, Console, Effect, Match, Order, Schema, pipe } from "effect"
 
 const readMigrationDirectory = pipe(
   FileSystem.FileSystem,
-  Effect.flatMap((_) => _.readDirectory("./migrations"))
+  Effect.flatMap((_) => _.readDirectory("./data/migrations"))
 )
 
 const MigrationId = Schema.NumberFromString.pipe(Schema.brand("MigrationId"))
-const MigrationFileName = Schema.TemplateLiteralParser(MigrationId, "::", Schema.String)
+const MigrationFileName = Schema.TemplateLiteralParser(MigrationId, "__", Schema.String)
 type MigrationFileName = Schema.Schema.Type<typeof MigrationFileName>
 const OrderMigrationsById = pipe(
   Order.number,
@@ -44,7 +44,7 @@ export default Effect.gen(function* () {
 const createMigration = (migrationName: string) =>
   Effect.gen(function* () {
     const fileSystem = yield* FileSystem.FileSystem
-    yield* fileSystem.writeFileString(`./migrations/${migrationName}.ts`, genericSQLTemplate)
+    yield* fileSystem.writeFileString(`./data/migrations/${migrationName}.ts`, genericSQLTemplate)
   })
 
 const resetCode = "\x1b[0m"
@@ -69,8 +69,8 @@ const command = Command.make("newest-migration", { migrationNameArg }, ({ migrat
     )
 
     const [latestMigrationId, ..._] = yield* latestMigration
-    yield* Console.log(`\x1b[32mCreating new migration: ${latestMigrationId + 1}::${migrationNameArg}${resetCode}`)
-    yield* createMigration(`${latestMigrationId + 1}::${migrationNameArg}`)
+    yield* Console.log(`\x1b[32mCreating new migration: ${latestMigrationId + 1}__${migrationNameArg}${resetCode}`)
+    yield* createMigration(`${latestMigrationId + 1}__${migrationNameArg}`)
   })
 )
 

@@ -10,7 +10,8 @@
     "lint": "eslint . --ext .ts,.tsx --fix",
     "format": "biome format .",
     "format:check": "biome format . --write",
-    "migrations:run": "pnpm dlx tsx ./data/run_migrations.ts"
+    "migrations:run": "tsx ./data/run_migrations.ts",
+    "migrations:create": "tsx ./data/create_migration.ts"
   },
   "dependencies": {
     "@effect/cli": "^0.59.18",
@@ -39,6 +40,7 @@
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
     "react-router": "^7.5.3",
+    "tsx": "^4.19.4",
     "vite-plugin-babel": "^1.3.1"
   },
   "devDependencies": {

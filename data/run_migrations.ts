@@ -15,4 +15,4 @@ const MigratorLive = pipe(
 
 const migrationsRuntime = pipe(MigratorLive, Layer.provideMerge(Logger.pretty), ManagedRuntime.make)
 
-Effect.logInfo("Running migrations...").pipe(migrationsRuntime.runFork)
+Effect.logInfo("Running migrations...").pipe(migrationsRuntime.runPromise)
