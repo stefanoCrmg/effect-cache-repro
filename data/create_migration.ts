@@ -31,7 +31,7 @@ import { Effect } from "effect"
 export default Effect.gen(function* () {
   const sql = yield* SqlClient.SqlClient
   yield* sql.onDialectOrElse({
-    pg: () => sql\`
+    sqlite: () => sql\`
       /* TODO: Write your migration here */
     \`,
     orElse: () => sql\`

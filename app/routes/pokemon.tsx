@@ -1,16 +1,15 @@
 import { Effect, pipe } from "effect"
 import type * as React from "react"
 import { remixServerRuntime } from "~/lib/runtime.server"
-import { PokemonService } from "~/services/Pokemon/repository/getPokemonByName"
+import { PokeAPI } from "~/services/PokeAPI"
 import type { Route } from "./+types/pokemon"
 import { RawData } from "./components/RawData"
 import * as styles from "./pokemon.css"
 
 export const loader = ({ params }: Route.LoaderArgs) =>
   pipe(
-    PokemonService,
-    Effect.tap(() => Effect.logDebug("Requesting pokemon by name", params.name)),
-    Effect.andThen((_) => _.getPokemonByName(params.name)),
+    PokeAPI,
+    Effect.andThen((api) => api.getPokemonByName(params.name)),
     remixServerRuntime.runPromise
   )
 
