@@ -53,6 +53,7 @@
     "@typescript-eslint/parser": "^8.31.1",
     "@vanilla-extract/vite-plugin": "^5.0.1",
     "globals": "^16.0.0",
+    "msw": "^2.8.4",
     "react-router-devtools": "^5.0.0",
     "typescript": "^5.8.3",
     "vite": "^6.3.4",

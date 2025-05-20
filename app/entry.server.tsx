@@ -5,6 +5,7 @@ import { getMetaTagTransformer, wrapSentryHandleRequest } from "@sentry/react-ro
 import * as Sentry from "@sentry/react-router"
 import { Config, Effect } from "effect"
 import { isbot } from "isbot"
+import { mswServer } from "mocks/node"
 import type { RenderToPipeableStreamOptions } from "react-dom/server"
 import { renderToPipeableStream } from "react-dom/server"
 import type { AppLoadContext, EntryContext } from "react-router"
@@ -27,6 +28,13 @@ Sentry.init({
 })
 
 export const streamTimeout = 5_000
+
+const isMSWEnabled = Config.boolean("ENABLE_MSW").pipe(Effect.runSync)
+console.log("isMSWEnabled", isMSWEnabled)
+if (isMSWEnabled) {
+  console.log("Listening to msw")
+  mswServer.listen()
+}
 
 const handleRequest = (
   request: Request,

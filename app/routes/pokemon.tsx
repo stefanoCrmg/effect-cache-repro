@@ -25,7 +25,7 @@ const PokemonPage: React.FC<Route.ComponentProps> = ({ params, loaderData }) => 
         <div className={styles.spriteContainer}>
           <div className={styles.spriteWrapper}>
             <img
-              src={loaderData.sprites.front_default}
+              src={loaderData.sprites.front_default.toString()}
               alt={`${params.name} default sprite`}
               className={styles.spriteImage}
             />
@@ -33,7 +33,7 @@ const PokemonPage: React.FC<Route.ComponentProps> = ({ params, loaderData }) => 
           </div>
           <div className={styles.spriteWrapper}>
             <img
-              src={loaderData.sprites.front_shiny}
+              src={loaderData.sprites.front_shiny.toString()}
               alt={`${params.name} shiny sprite`}
               className={styles.spriteImage}
             />
@@ -41,7 +41,7 @@ const PokemonPage: React.FC<Route.ComponentProps> = ({ params, loaderData }) => 
           </div>
           <div className={styles.spriteWrapper}>
             <img
-              src={loaderData.sprites.other.officialArtwork.front_default}
+              src={loaderData.sprites.other.officialArtwork.front_default.toString()}
               alt={`${params.name} official artwork`}
               className={styles.spriteImage}
             />

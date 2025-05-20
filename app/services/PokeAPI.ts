@@ -3,12 +3,12 @@ import { Cache, Duration, Effect, Schema, pipe } from "effect"
 
 export class PokemonByNameResponse extends Schema.Class<PokemonByNameResponse>("PokemonByNameResponse")({
   sprites: Schema.Struct({
-    front_default: Schema.String,
-    front_shiny: Schema.String,
+    front_default: Schema.URL,
+    front_shiny: Schema.URL,
     other: Schema.Struct({
       "official-artwork": Schema.Struct({
-        front_default: Schema.String,
-        front_shiny: Schema.String,
+        front_default: Schema.URL,
+        front_shiny: Schema.URL,
       }),
     }).pipe(Schema.rename({ "official-artwork": "officialArtwork" })),
   }),
